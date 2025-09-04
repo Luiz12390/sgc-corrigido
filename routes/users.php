@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -9,10 +11,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/meu-perfil-teste', function () {
-    return view('users.profile');
-})->name('profile');
-
-Route::get('/perfil/{user}', function (User $user) {
-    return view('users.profile', ['user' => $user]);
-})->name('profile.show');
+Route::get('/perfil/{user}', [UserController::class, 'show'])->name('profile.show');
+Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/perfil', [ProfileController::class, 'destroy'])->name('profile.destroy');

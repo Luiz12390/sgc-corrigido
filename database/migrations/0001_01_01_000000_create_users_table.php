@@ -11,9 +11,8 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('title')->nullable(); // Ex: "Pesquisador na UFFS"
+            $table->string('title')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->unsignedBigInteger('organization_id')->nullable(); // Adicione esta
             $table->rememberToken();
             $table->timestamps();
         });

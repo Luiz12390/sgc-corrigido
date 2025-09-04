@@ -29,11 +29,7 @@
     .card-text h4 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color); }
     .card-text p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-text-color); }
     .card-image { width: 220px; height: 140px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-    .pagination { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 3rem; }
-    .page-link { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--card-background-color); font-weight: 500; transition: all 0.3s ease; }
-    .page-link:hover { border-color: var(--primary-color); color: var(--primary-color); }
-    .page-link.active { background-color: var(--primary-color); color: var(--white-color); border-color: var(--primary-color); }
-    .page-link.disabled { color: #ccc; cursor: default; }
+    .pagination-results-text { text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--gray-text-color); }
 </style>
 @endpush
 
@@ -41,70 +37,76 @@
     <div class="page-container">
         <aside class="filters-sidebar card">
             <h3>Filters</h3>
-            <div class="filter-group">
-                <label for="category">Categoria</label>
-                <div class="custom-select"><span>Todas</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708 .708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg></div>
-            </div>
-            <div class="filter-group">
-                <label for="tags">Tags</label>
-                 <div class="custom-select"><span>Qualquer</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg></div>
-            </div>
-            <div class="filter-group">
-                <label for="status">Status</label>
-                 <div class="custom-select"><span>Em Andamento</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg></div>
-            </div>
-            <button class="apply-filters-btn" disabled>Aplicar Filtros</button>
+            {{-- Conteúdo dos filtros aqui --}}
         </aside>
 
         <main class="content-area">
             <h1>Repositório de Projetos</h1>
             <p>Explore projetos, junte-se a iniciativas e colabore com o ecossistema de inovação.</p>
 
-            <div class="content-search-bar"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px; height:20px; color: var(--gray-text-color);"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg><input type="text" placeholder="Buscar por projetos..."></div>
-
-            <section class="content-section">
-                <h2>Projeto em Destaque</h2>
-                <a href="{{ route('projects.show') }}" class="content-card">
-                    <div class="card-text">
-                        <span class="card-type">Projeto de P&D</span>
-                        <h4>Desenvolvinto de App de Mobilidade Urbana</h4>
-                        <p>Um projeto colaborativo para criar um aplicativo que otimiza o transporte público em Chapecó.</p>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1570125910385-033512938886?w=400" alt="Mobilidade Urbana" class="card-image">
-                </a>
-            </section>
+            <div class="content-search-bar">
+                <input type="text" placeholder="Buscar por projetos...">
+            </div>
 
             <section class="content-section">
                 <h2>Todos os Projetos</h2>
                 <div class="projects-list">
-                    <a href="#" class="content-card">
-                        <div class="card-text">
-                            <span class="card-type">Iniciativa Comunitária</span>
-                            <h4>Hortas Urbanas Comunitárias</h4>
-                            <p>Implementação de hortas em espaços públicos para promover a segurança alimentar e a integração da comunidade.</p>
+                    @forelse ($projects as $project)
+                        <a href="#" class="content-card">
+                            <div class="card-text">
+                                <span class="card-type">Status: {{ $project->status }}</span>
+                                <h4>{{ $project->title }}</h4>
+                                <p>{{ Str::limit($project->description, 150) }}</p>
+                            </div>
+                            <img src="{{ $project->cover_image_path }}" alt="Imagem para {{ $project->title }}" class="card-image">
+                        </a>
+                    @empty
+                        <div class="card">
+                            <p>Nenhum projeto encontrado no momento.</p>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1597362924946-88c27187e078?w=400" alt="Horta Urbana" class="card-image">
-                    </a>
-                    <a href="#" class="content-card">
-                        <div class="card-text">
-                            <span class="card-type">Projeto de Software</span>
-                            <h4>Plataforma de Gestão para ONGs</h4>
-                            <p>Desenvolvimento de uma plataforma de código aberto para ajudar organizações não-governamentais na gestão de seus recursos.</p>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400" alt="Gestão" class="card-image">
-                    </a>
+                    @endforelse
                 </div>
             </section>
+            
+            @if ($projects->hasPages())
+                <nav>
+                    <ul class="pagination">
+                        {{-- Link da Página Anterior --}}
+                        @if ($projects->onFirstPage())
+                            <li class="page-item disabled" aria-disabled="true"><span class="page-link">&lt;</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $projects->previousPageUrl() }}" rel="prev">&lt;</a></li>
+                        @endif
 
-            <nav class="pagination">
-                <a href="#" class="page-link disabled">&lt;</a>
-                <a href="#" class="page-link active">1</a>
-                <a href="#" class="page-link">2</a>
-                <a href="#" class="page-link">3</a>
-                <span class="page-link disabled">...</span>
-                <a href="#" class="page-link">8</a>
-                <a href="#" class="page-link">&gt;</a>
-            </nav>
+                        {{-- Elementos da Paginação --}}
+                        @foreach ($projects->links()->elements as $element)
+                            @if (is_string($element))
+                                <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
+                            @endif
+                            @if (is_array($element))
+                                @foreach ($element as $page => $url)
+                                    @if ($page == $projects->currentPage())
+                                        <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
+                                    @else
+                                        <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+
+                        {{-- Link da Próxima Página --}}
+                        @if ($projects->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $projects->nextPageUrl() }}" rel="next">&gt;</a></li>
+                        @else
+                            <li class="page-item disabled" aria-disabled="true"><span class="page-link">&gt;</span></li>
+                        @endif
+                    </ul>
+                </nav>
+            @endif
+
+            <div class="pagination-results-text">
+                Mostrando {{ $projects->firstItem() }} a {{ $projects->lastItem() }} de {{ $projects->total() }} resultados
+            </div>
         </main>
     </div>
 @endsection

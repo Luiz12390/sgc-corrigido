@@ -147,21 +147,35 @@
             <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:24px; height:24px; color: var(--gray-text-color);"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg></a>
             <div class="profile-dropdown">
                 <div class="profile-trigger">
-                    <img src="https://i.pravatar.cc/150?u={{ auth()->id() ?? 'default' }}" alt="Foto do perfil" class="profile-pic">
+                    {{-- Usar @auth para garantir que só tentaremos pegar o ID se o usuário estiver logado --}}
+                    @auth
+                        <img src="https://i.pravatar.cc/150?u={{ auth()->id() }}" alt="Foto do perfil" class="profile-pic">
+                    @else
+                        {{-- Imagem para visitantes caso o dropdown seja visível --}}
+                        <img src="https://i.pravatar.cc/150?u=guest" alt="Foto de visitante" class="profile-pic">
+                    @endauth
                 </div>
                 <div class="dropdown-menu">
-                    <div class="dropdown-header">
-                        <strong>{{ auth()->user()->name ?? 'Visitante' }}</strong>
-                        <span>{{ auth()->user()->email ?? '' }}</span>
-                    </div>
-                    <ul>
-                        <li><a href="{{ route('profile') }}">Meu Perfil</a></li>
-                        <li><a href="#">Configurações</a></li>
-                    </ul>
-                    <form method="POST" action="{{ route('logout') }}" class="logout-form">
-                        @csrf
-                        <button type="submit">Sair</button>
-                    </form>
+                    @auth
+                        <div class="dropdown-header">
+                            <strong>{{ auth()->user()->name }}</strong>
+                            <span>{{ auth()->user()->email }}</span>
+                        </div>
+                        <ul>    
+                            <li><a href="{{ route('profile.show', ['user' => auth()->user()]) }}">Meu Perfil</a></li>
+                            <li><a href="#">Configurações</a></li>
+                        </ul>
+                        <form method="POST" action="{{ route('logout') }}" class="logout-form">
+                            @csrf
+                            <button type="submit">Sair</button>
+                        </form>
+                    @else
+                        {{-- Opções para usuários não logados --}}
+                        <ul>
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Registrar</a></li>
+                        </ul>
+                    @endauth
                 </div>
             </div>
         </div>

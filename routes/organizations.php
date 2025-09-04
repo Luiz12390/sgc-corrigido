@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,12 +9,5 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Rota de teste para perfil de organização
-Route::get('/organizacao/exemplo', function () {
-    return view('organizations.show');
-})->name('organizations.show');
-
-// Rota de teste para listagem de membros da organização
-Route::get('/organizacao/exemplo/membros', function () {
-    return view('organizations.members');
-})->name('organizations.members');
+Route::get('/organizacao/{organization}', [OrganizationController::class, 'show'])->name('organizations.show');
+Route::get('/organizacao/{organization}/membros', [OrganizationController::class, 'members'])->name('organizations.members');

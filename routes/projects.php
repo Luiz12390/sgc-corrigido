@@ -1,12 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
 | Rotas de Projetos
 |--------------------------------------------------------------------------
 */
+
+Route::get('/projetos', [ProjectController::class, 'index'])->name('projetos.index');
 
 // Rota para a listagem (index) de projetos
 Route::get('/projetos', function () {
