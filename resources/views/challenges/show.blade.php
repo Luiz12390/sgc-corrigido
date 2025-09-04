@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Detalhes do Desafio | SGC-Chapecó')
+{{-- O título da página agora usa o título do desafio --}}
+@section('title', ($challenge->title ?? 'Detalhes do Desafio') . ' | SGC-Chapecó')
 
 @push('styles')
 <style>
@@ -11,12 +12,16 @@
         background-color: var(--card-background-color);
         border-bottom: 1px solid var(--border-color);
         padding: 1rem 2.5rem;
+    }
+    .subheader-content {
+        /* Ajustado para ocupar 100% da largura */
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
     .breadcrumbs {
-        font-size: 0.9rem;
+        font-size: 1rem;
+        font-weight: 500;
         color: var(--gray-text-color);
     }
     .breadcrumbs a {
@@ -26,11 +31,12 @@
     .btn-primary-header {
         background-color: var(--primary-color);
         color: var(--white-color);
-        padding: 0.6rem 1.2rem;
+        padding: 0.7rem 1.5rem;
         border-radius: 8px;
         font-weight: 500;
         font-size: 0.9rem;
         transition: background-color 0.3s ease;
+        white-space: nowrap;
     }
     .btn-primary-header:hover {
         background-color: #256e67;
@@ -39,7 +45,7 @@
     /* Container Principal do Conteúdo */
     .challenge-detail-container {
         max-width: 900px;
-        margin: 2.5rem auto; /* Adiciona espaço acima e abaixo */
+        margin: 2.5rem auto;
     }
 
     .challenge-title-section h1 {
@@ -88,24 +94,26 @@
 
 @section('content')
     <div class="page-subheader">
-        <nav class="breadcrumbs">
-            <a href="{{ route('desafios.index') }}">Desafios</a> / <span>Soluções para Embalagens</span>
-        </nav>
-        <div class="page-actions">
-            <a href="#" class="btn-primary-header">Novo Desafio</a>
+        <div class="subheader-content">
+            <nav class="breadcrumbs">
+                <a href="{{ route('challenges.index') }}">Desafios</a> / <span>{{ Str::limit($challenge->title, 30) }}</span>
+            </nav>
+            <div class="page-actions">
+                <a href="{{ route('challenges.create') }}" class="btn-primary-header">Novo Desafio</a>
+            </div>
         </div>
     </div>
 
     <div class="challenge-detail-container">
         <div class="card">
             <div class="challenge-title-section">
-                <h1>Título do Desafio: Soluções Inovadoras para Embalagens Sustentáveis</h1>
-                <p class="meta-info">Publicado por Innovate Solutions Inc. — Aberto até 15 de julho de 2025</p>
+                <h1>{{ $challenge->title }}</h1>
+                <p class="meta-info">Publicado por Innovate Solutions Inc. — Criado em {{ $challenge->created_at->translatedFormat('d \d\e F \d\e Y') }}</p>
             </div>
 
             <section class="challenge-section">
                 <h2>Descrição do Desafio</h2>
-                <p>Estamos buscando soluções de embalagens inovadoras e sustentáveis para reduzir nosso impacto ambiental e aprimorar a proteção de produtos. Este desafio convida propostas que abordem a inovação de materiais, a eficiência do design e a gestão de fim de vida. As soluções devem ser custo-efetivas, escaláveis e alinhadas com nosso compromisso com a sustentabilidade. Encorajamos a colaboração entre universidades, empresas e profissionais para desenvolver abordagens inovadoras.</p>
+                <p>{{ $challenge->description }}</p>
             </section>
 
             <section class="challenge-section">
@@ -113,24 +121,22 @@
                 <ul class="requirements-list">
                     <li>
                         <div class="icon"></div>
-                        <div>
-                            Inovação de Materiais: As propostas devem focar em materiais biodegradáveis, compostáveis ou recicláveis que minimizem o impacto ambiental.
-                            <a href="#">Criar Resumo em Áudio</a>
-                        </div>
+                        <div>Inovação de Materiais: As propostas devem focar em materiais biodegradáveis, compostáveis ou recicláveis que minimizem o impacto ambiental. <a href="#">Criar Resumo em Áudio</a></div>
                     </li>
                     <li>
                         <div class="icon"></div>
-                        <div>
-                            Eficiência de Design: As soluções devem otimizar o tamanho e o peso da embalagem para reduzir o uso de material e os custos de transporte.
-                        </div>
+                        <div>Eficiência de Design: As soluções devem otimizar o tamanho e o peso da embalagem para reduzir o uso de material e os custos de transporte.</div>
                     </li>
                      <li>
                         <div class="icon"></div>
-                        <div>
-                            Gestão de Fim de Vida: As propostas devem abordar a reciclabilidade, compostabilidade ou reutilização dos materiais de embalagem, promovendo os princípios da economia circular.
-                        </div>
+                        <div>Gestão de Fim de Vida: As propostas devem abordar a reciclabilidade, compostabilidade ou reutilização dos materiais de embalagem, promovendo os princípios da economia circular.</div>
                     </li>
                 </ul>
+            </section>
+
+            <section class="challenge-section">
+                <h2>Resultados Esperados</h2>
+                <p>Propostas bem-sucedidas demonstrarão uma clara compreensão dos princípios de sustentabilidade e oferecerão soluções práticas e escaláveis. Esperamos resultados que incluam redução do consumo de materiais, menor pegada de carbono e maior reciclabilidade ou compostabilidade das embalagens.</p>
             </section>
 
             <section class="challenge-section">
@@ -139,7 +145,7 @@
                     <div class="organization-info">
                         <h4>Innovate Solutions Inc.</h4>
                         <p>Fornecedor líder de soluções sustentáveis para diversas indústrias.</p>
-                        <a href="{{ route('organizations.show') }}">Ver Organização</a>
+                        <a href="#">Ver Organização</a>
                     </div>
                     <div class="organization-logo">
                         <img src="https://via.placeholder.com/180x100.png?text=Logo+Empresa" alt="Logo da Empresa">

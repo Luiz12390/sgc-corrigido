@@ -64,7 +64,7 @@
 
             <section class="content-section">
                 <h2>Projeto em Destaque</h2>
-                <a href="{{ route('projetos.show') }}" class="content-card">
+                <a href="{{ route('projects.show') }}" class="content-card">
                     <div class="card-text">
                         <span class="card-type">Projeto de P&D</span>
                         <h4>Desenvolvinto de App de Mobilidade Urbana</h4>

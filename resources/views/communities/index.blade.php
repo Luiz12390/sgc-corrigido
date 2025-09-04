@@ -79,7 +79,7 @@
     <div class="page-subheader">
         <div class="subheader-content">
             <nav class="breadcrumbs">
-                <a href="{{ route('comunidade.index') }}">Comunidade</a> / <span>Eventos e Grupos</span>
+                <a href="{{ route('communities.index') }}">Comunidade</a> / <span>Eventos e Grupos</span>
             </nav>
             <div class="page-actions">
                 <a href="#" class="btn-primary-header">Criar Nova Comunidade</a>
@@ -134,7 +134,7 @@
                     <div class="card-text">
                         <h3>Centro de Inovadores de Tecnologia</h3>
                         <p>Uma comunidade para entusiastas de tecnologia, desenvolvedores e inovadores compartilharem ideias e colaborarem em projetos.</p>
-                        <a href="{{ route('comunidade.show') }}" class="btn-join">Entrar</a>
+                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
                     </div>
                     <img src="https://images.unsplash.com/photo-1588072432836-e86123924903?w=400" alt="Tecnologia" class="card-image">
                 </div>
@@ -142,7 +142,7 @@
                     <div class="card-text">
                         <h3>Rede de Soluções Sustentáveis</h3>
                         <p>Uma rede focada no desenvolvimento de soluções sustentáveis para desafios ambientais e sociais.</p>
-                        <a href="{{ route('comunidade.show') }}" class="btn-join">Entrar</a>
+                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
                     </div>
                     <img src="https://images.unsplash.com/photo-1542601904-86986a848528?w=400" alt="Sustentabilidade" class="card-image">
                 </div>
@@ -150,7 +150,7 @@
                     <div class="card-text">
                         <h3>Coletivo de Mentes Criativas</h3>
                         <p>Um espaço para artistas, designers e profissionais criativos exibirem seu trabalho e se conectarem com outros.</p>
-                        <a href="{{ route('comunidade.show') }}" class="btn-join">Entrar</a>
+                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
                     </div>
                     <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400" alt="Criatividade" class="card-image">
                 </div>
@@ -158,7 +158,7 @@
                     <div class="card-text">
                         <h3>Fórum de Crescimento Empresarial</h3>
                         <p>Um fórum para empreendedores e líderes de negócios discutirem estratégias de crescimento e compartilharem insights.</p>
-                        <a href="{{ route('comunidade.show') }}" class="btn-join">Entrar</a>
+                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
                     </div>
                     <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400" alt="Negócios" class="card-image">
                 </div>

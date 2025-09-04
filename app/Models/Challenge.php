@@ -20,4 +20,14 @@ class Challenge extends Model
         'description',
         'cover_image_path',
     ];
+
+     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
 }

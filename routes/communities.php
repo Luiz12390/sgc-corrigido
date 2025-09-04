@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Route;
 
 // Rota para a listagem (index) de comunidades
 Route::get('/comunidade', function () {
-    return view('comunidade.index');
-})->name('comunidade.index');
+    return view('communities.index');
+})->name('communities.index');
 
 // Rota de teste para a página interna de uma comunidade
 Route::get('/comunidade/exemplo', function () {
-    return view('comunidade.show');
-})->name('comunidade.show');
+    return view('communities.show');
+})->name('communities.show');

@@ -68,7 +68,7 @@
 
             <section class="content-section">
                 <h2>Conteúdo em Destaque</h2>
-                <a href="{{ route('recursos.show') }}" class="content-card">
+                <a href="{{ route('resources.show') }}" class="content-card">
                     <div class="card-text">
                         <span class="card-type">Artigo</span>
                         <h4>O Futuro da Inovação em Chapecó</h4>
@@ -81,7 +81,7 @@
             <section class="content-section">
                 <h2>Todo o Conteúdo</h2>
                 <div class="resources-list">
-                    <a href="{{ route('recursos.show') }}" class="content-card">
+                    <a href="{{ route('resources.show') }}" class="content-card">
                         <div class="card-text">
                             <span class="card-type">Relatório</span>
                             <h4>Análise do Ecossistema de Startups de Chapecó</h4>
@@ -89,7 +89,7 @@
                         </div>
                         <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400" alt="Reunião de negócios" class="card-image">
                     </a>
-                    <a href="{{ route('recursos.show') }}" class="content-card">
+                    <a href="{{ route('resources.show') }}" class="content-card">
                         <div class="card-text">
                             <span class="card-type">Estudo de Caso</span>
                             <h4>Colaboração de Sucesso entre Universidade e Indústria</h4>

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Route;
 
 // Rota para a listagem (index) de recursos
 Route::get('/recursos', function () {
-    return view('recursos.index');
-})->name('recursos.index');
+    return view('resources.index');
+})->name('resources.index');
 
 // Rota de teste para detalhes de um recurso
 Route::get('/recursos/exemplo', function () {
-    return view('recursos.show');
-})->name('recursos.show');
+    return view('resources.show');
+})->name('resources.show');

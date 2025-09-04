@@ -114,26 +114,26 @@
                         </div>
                     </li>
                     <li class="nav-item-dropdown">
-                        <a href="{{ route('projetos.index') }}" class="nav-link-dropdown-toggle {{ request()->routeIs('projetos.index') ? 'active' : '' }}">
+                        <a href="{{ route('projects.index') }}" class="nav-link-dropdown-toggle {{ request()->routeIs('projects.index') ? 'active' : '' }}">
                             <span>Projetos</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
                         </a>
                         <div class="nav-dropdown-menu">
                             <a href="#" class="nav-dropdown-item">Meus projetos</a>
                             <a href="#" class="nav-dropdown-item">Projetos da minha empresa</a>
-                            <a href="{{ route('projetos.index') }}" class="nav-dropdown-item">Todos os Projetos</a>
+                            <a href="{{ route('projects.index') }}" class="nav-dropdown-item">Todos os Projetos</a>
                         </div>
                     </li>
-                    <li><a href="{{ route('comunidade.index') }}">Comunidade</a></li>
+                    <li><a href="{{ route('communities.index') }}">Comunidade</a></li>
                     <li class="nav-item-dropdown">
-                        <a href="{{ route('recursos.index') }}" class="nav-link-dropdown-toggle {{ request()->routeIs('recursos.index') ? 'active' : '' }}">
+                        <a href="{{ route('resources.index') }}" class="nav-link-dropdown-toggle {{ request()->routeIs('recursos.index') ? 'active' : '' }}">
                             <span>Recursos</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708 .708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
                         </a>
                         <div class="nav-dropdown-menu">
                             <a href="#" class="nav-dropdown-item">Meus recursos publicados</a>
                             <a href="#" class="nav-dropdown-item">Grupos de recursos</a>
-                            <a href="{{ route('recursos.index') }}" class="nav-dropdown-item">Recursos Públicos</a>
+                            <a href="{{ route('resources.index') }}" class="nav-dropdown-item">Recursos Públicos</a>
                         </div>
                     </li>
                 </ul>

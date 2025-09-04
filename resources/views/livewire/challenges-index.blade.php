@@ -73,7 +73,7 @@
                 <h2>Todos os Desafios</h2>
                 <div class="challenges-list">
                     @forelse ($challenges as $challenge)
-                        <a href="#" class="content-card">
+                        <a href="{{ route('challenges.show', $challenge) }}" class="content-card">
                             <div class="card-text">
                                 <span class="card-type">{{ $challenge->type }}</span>
                                 <h4>{{ $challenge->title }}</h4>

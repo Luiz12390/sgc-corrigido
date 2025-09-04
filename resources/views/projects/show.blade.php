@@ -185,7 +185,7 @@
     <div class="card project-section-card">
         <div class="section-header">
             <h2>Membros da Equipe</h2>
-            <a href="{{ route('projetos.members') }}" class="view-all-link">Ver todos &rarr;</a>
+            <a href="{{ route('projects.members') }}" class="view-all-link">Ver todos &rarr;</a>
         </div>
         <div class="members-list">
             <img src="https://i.pravatar.cc/150?u=a" alt="Membro 1" class="member-avatar">
@@ -198,7 +198,7 @@
     <div class="card project-section-card">
         <div class="section-header">
             <h2>Tarefas</h2>
-            <a href="{{ route('projetos.tasks') }}" class="view-all-link">Ver todas as tarefas &rarr;</a>
+            <a href="{{ route('projects.tasks') }}" class="view-all-link">Ver todas as tarefas &rarr;</a>
         </div>
         <table class="tasks-table">
             <thead>
