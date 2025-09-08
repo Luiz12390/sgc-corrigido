@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
 Route::get('/organizacao/{organization}', [OrganizationController::class, 'show'])->name('organizations.show');
 Route::get('/organizacao/{organization}/membros', [OrganizationController::class, 'members'])->name('organizations.members');
 Route::get('/organizacao/{organization}/gerenciar-membros', [OrganizationController::class, 'manageMembers'])->name('organizations.manageMembers');

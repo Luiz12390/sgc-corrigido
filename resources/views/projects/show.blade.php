@@ -70,7 +70,7 @@
             <div class="members-list">
                 @forelse ($project->members->take(10) as $member)
                     <a href="{{ route('profile.show', $member) }}" title="{{ $member->name }}">
-                        <img src="{{ $member->profile_photo_path ?? 'https://via.placeholder.com/48' }}" alt="Foto de {{ $member->name }}" class="member-avatar">
+                        <img src="{{ $member->profile_photo_url  ?? 'https://via.placeholder.com/48' }}" alt="Foto de {{ $member->name }}" class="member-avatar">
                     </a>
                 @empty
                     <p style="color: var(--gray-text-color);">Nenhum membro vinculado a este projeto ainda.</p>

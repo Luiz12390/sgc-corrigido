@@ -27,7 +27,7 @@
     <div class="members-grid">
         @forelse ($project->members as $member)
             <a href="{{ route('profile.show', $member) }}" class="member-card card">
-                <img src="{{ $member->profile_photo_path ?? 'https://via.placeholder.com/120' }}" alt="Foto de {{ $member->name }}" class="member-avatar">
+                <img src="{{ $member->profile_photo_url  ?? 'https://via.placeholder.com/120' }}" alt="Foto de {{ $member->name }}" class="member-avatar">
                 <h4>{{ $member->name }}</h4>
                 <p>{{ $member->title }}</p>
             </a>

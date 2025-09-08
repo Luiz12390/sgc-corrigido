@@ -12,6 +12,11 @@ class OrganizationController extends Controller
 {
     use AuthorizesRequests;
 
+    public function index()
+    {
+        return view('organizations.index');
+    }
+
     /**
      * Exibe o perfil de uma organização específica.
      */

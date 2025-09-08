@@ -82,7 +82,7 @@
                             <div class="task-card" wire:click="editTask({{ $task->id }})" data-id="{{ $task->id }}" wire:key="task-{{ $task->id }}">
                                 <h4>{{ $task->name }}</h4>
                                 <div class="task-card-footer">
-                                    <div class="task-card-assignee"><img src="{{ $task->user->profile_photo_path ?? 'https://via.placeholder.com/32' }}" title="{{ $task->user->name ?? '' }}" alt="{{ $task->user->name ?? '' }}"></div>
+                                    <div class="task-card-assignee"><img src="{{ $task->user->profile_photo_url  ?? 'https://via.placeholder.com/32' }}" title="{{ $task->user->name ?? '' }}" alt="{{ $task->user->name ?? '' }}"></div>
                                     @if ($task->due_date)
                                         <span class="task-card-due-date">{{ \Carbon\Carbon::parse($task->due_date)->format('d/m/Y') }}</span>
                                     @endif

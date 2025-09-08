@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ChallengeSeeder::class,
             TaskSeeder::class,
             CommunitySeeder::class,
+            EventSeeder::class,
         ]);
     }
 }
