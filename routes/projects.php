@@ -1,32 +1,32 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Rotas de Projetos
+| Rotas de Projetos (ORDEM CORRIGIDA)
 |--------------------------------------------------------------------------
 */
 
-Route::get('/projetos', [ProjectController::class, 'index'])->name('projetos.index');
+Route::get('/projetos', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projetos/criar', [ProjectController::class, 'create'])->name('projects.create');
+Route::post('/projetos', [ProjectController::class, 'store'])->name('projects.store');
 
-// Rota para a listagem (index) de projetos
-Route::get('/projetos', function () {
-    return view('projects.index');
-})->name('projects.index');
 
-// Rota de teste para detalhes de um projeto
-Route::get('/projetos/exemplo', function () {
-    return view('projects.show');
-})->name('projects.show');
+Route::controller(ProjectController::class)->group(function () {
+    // READ (Detalhes)
+    Route::get('/projetos/{project}', 'show')->name('projects.show');
 
-// Rota de teste para a página de tarefas de um projeto
-Route::get('/projetos/exemplo/tarefas', function () {
-    return view('projects.tasks');
-})->name('projects.tasks');
+    // UPDATE
+    Route::get('/projetos/{project}/editar', 'edit')->name('projects.edit');
+    Route::put('/projetos/{project}', 'update')->name('projects.update');
 
-// Rota de teste para a página de membros de um projeto
-Route::get('/projetos/exemplo/membros', function () {
-    return view('projects.members');
-})->name('projects.members');
+    // DELETE
+    Route::delete('/projetos/{project}', 'destroy')->name('projects.destroy');
+
+    // Membros
+    Route::get('/projetos/{project}/membros', 'members')->name('projects.members');
+    Route::get('/projetos/{project}/tarefas', [ProjectController::class, 'tasks'])->name('projects.tasks');
+
+});

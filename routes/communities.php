@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommunityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,12 +9,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Rota para a listagem (index) de comunidades
-Route::get('/comunidade', function () {
-    return view('communities.index');
-})->name('communities.index');
+Route::get('/comunidade', [CommunityController::class, 'index'])->name('communities.index');
 
-// Rota de teste para a página interna de uma comunidade
+
 Route::get('/comunidade/exemplo', function () {
     return view('communities.show');
 })->name('communities.show');

@@ -2,7 +2,40 @@
     {{-- É importante ter um <div> raiz envolvendo todo o componente Livewire --}}
 
     <style>
-        /* ESTILOS ESPECÍFICOS DA PÁGINA (agora dentro do componente) */
+        /* Sub-Header da Página (Breadcrumbs e Ações) */
+        .page-subheader {
+            background-color: var(--card-background-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2.5rem; /* Padding horizontal para alinhar com o header principal */
+        }
+        .subheader-content {
+            /* Ajustado para ocupar 100% da largura */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .breadcrumbs {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-text-color);
+        }
+        .breadcrumbs a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        .btn-primary-header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+        }
+        .btn-primary-header:hover {
+            background-color: #256e67;
+        }
         .page-container {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -28,7 +61,16 @@
         .card-text p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-text-color); }
         .card-image { width: 220px; height: 140px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
     </style>
-
+    <div class="page-subheader">
+        <div class="subheader-content">
+            <nav class="breadcrumbs">
+                <a href="{{ route('challenges.index') }}">Desafios</a> / <span>Repositório de Desafios</span>
+            </nav>
+            <div class="page-actions">
+                <a href="{{ route('challenges.create') }}" class="btn-primary-header">Novo Desafio</a>
+            </div>
+        </div>
+    </div>
     <div class="page-container">
         <aside class="filters-sidebar card">
             <h3>Filters</h3>
@@ -42,7 +84,6 @@
                     <option value="Estudo de Caso">Estudo de Caso</option>
                 </select>
             </div>
-            {{-- Outros filtros podem ser adicionados da mesma forma --}}
             <button class="apply-filters-btn" disabled>Aplicar Filtros</button>
         </aside>
 
@@ -58,7 +99,7 @@
             @if ($featuredChallenge)
             <section class="content-section">
                 <h2>Desafio em Destaque</h2>
-                <a href="#" class="content-card">
+                <a href="{{ route('challenges.show', $featuredChallenge) }}" class="content-card">
                     <div class="card-text">
                         <span class="card-type">{{ $featuredChallenge->type }}</span>
                         <h4>{{ $featuredChallenge->title }}</h4>

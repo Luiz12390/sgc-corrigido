@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -14,7 +15,7 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('organizations');
+        $user->load('organizations', 'projects');
 
         return view('users.profile', ['user' => $user]);
     }
@@ -38,12 +39,22 @@ class ProfileController extends Controller
 
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'title' => ['nullable', 'string', 'max:255'],
+            'bio' => ['nullable', 'string'],
+            'institution' => ['nullable', 'string', 'max:255'],
+            'competencies' => ['nullable', 'string', 'max:255'],
+            'interests' => ['nullable', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'max:2048'],
         ]);
 
-        $user->update($validatedData);
+        if ($request->hasFile('photo')) {
+            if ($user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+            $validatedData['profile_photo_path'] = $request->file('photo')->store('profile-photos', 'public');
+        }
 
-        return redirect()->route('profile.show', $user)->with('status', 'Perfil atualizado com sucesso!');
+        $user->update($validatedData);
+        return redirect()->route('profile.show', ['user' => $user])->with('status', 'Perfil atualizado com sucesso!');
     }
 }

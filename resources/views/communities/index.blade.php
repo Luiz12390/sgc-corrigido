@@ -130,38 +130,20 @@
         <section class="page-section">
             <h2>Comunidades Ativas</h2>
             <div class="communities-list">
-                <div class="community-card">
-                    <div class="card-text">
-                        <h3>Centro de Inovadores de Tecnologia</h3>
-                        <p>Uma comunidade para entusiastas de tecnologia, desenvolvedores e inovadores compartilharem ideias e colaborarem em projetos.</p>
-                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
+                @forelse ($communities as $community)
+                    <div class="community-card">
+                        <div class="card-text">
+                            <h3>{{ $community->name }}</h3>
+                            <p>{{ $community->description }}</p>
+                            <a href="#" class="btn-join">Entrar</a>
+                        </div>
+                        <img src="{{ $community->cover_image_path }}" alt="Imagem da comunidade {{ $community->name }}" class="card-image">
                     </div>
-                    <img src="https://images.unsplash.com/photo-1588072432836-e86123924903?w=400" alt="Tecnologia" class="card-image">
-                </div>
-                <div class="community-card">
-                    <div class="card-text">
-                        <h3>Rede de Soluções Sustentáveis</h3>
-                        <p>Uma rede focada no desenvolvimento de soluções sustentáveis para desafios ambientais e sociais.</p>
-                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
+                @empty
+                    <div class="card">
+                        <p>Nenhuma comunidade ativa no momento.</p>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1542601904-86986a848528?w=400" alt="Sustentabilidade" class="card-image">
-                </div>
-                <div class="community-card">
-                    <div class="card-text">
-                        <h3>Coletivo de Mentes Criativas</h3>
-                        <p>Um espaço para artistas, designers e profissionais criativos exibirem seu trabalho e se conectarem com outros.</p>
-                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400" alt="Criatividade" class="card-image">
-                </div>
-                <div class="community-card">
-                    <div class="card-text">
-                        <h3>Fórum de Crescimento Empresarial</h3>
-                        <p>Um fórum para empreendedores e líderes de negócios discutirem estratégias de crescimento e compartilharem insights.</p>
-                        <a href="{{ route('communities.show') }}" class="btn-join">Entrar</a>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400" alt="Negócios" class="card-image">
-                </div>
+                @endforelse
             </div>
         </section>
     </div>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'SGC-Chapecó')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,6 +11,41 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
    <style>
+        /* ================== ESTILOS GERAIS DE BOTÕES ================== */
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        /* Estilo Primário (Fundo Verde) */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border-color: var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: #256e67;
+            border-color: #256e67;
+        }
+
+        /* Estilo Secundário (Borda Verde) */
+        .btn-secondary {
+            background-color: var(--card-background-color);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+        }
         /* CSS Reset & Basic Setup */
         :root {
             --primary-color: #2D8A81;
@@ -119,8 +155,8 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
                         </a>
                         <div class="nav-dropdown-menu">
-                            <a href="#" class="nav-dropdown-item">Meus projetos</a>
-                            <a href="#" class="nav-dropdown-item">Projetos da minha empresa</a>
+                            <a href="{{ route('projects.index') }}?filter=meus-projetos" class="nav-dropdown-item">Meus projetos</a>
+                            <a href="{{ route('projects.index') }}?filter=minha-empresa" class="nav-dropdown-item">Projetos da minha empresa</a>
                             <a href="{{ route('projects.index') }}" class="nav-dropdown-item">Todos os Projetos</a>
                         </div>
                     </li>
@@ -147,11 +183,9 @@
             <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:24px; height:24px; color: var(--gray-text-color);"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg></a>
             <div class="profile-dropdown">
                 <div class="profile-trigger">
-                    {{-- Usar @auth para garantir que só tentaremos pegar o ID se o usuário estiver logado --}}
                     @auth
-                        <img src="https://i.pravatar.cc/150?u={{ auth()->id() }}" alt="Foto do perfil" class="profile-pic">
+                        <img id="profile-pic" class="profile-pic" src="{{ auth()->user()->profile_photo_url }}" alt="Foto de {{ auth()->user()->name }}">
                     @else
-                        {{-- Imagem para visitantes caso o dropdown seja visível --}}
                         <img src="https://i.pravatar.cc/150?u=guest" alt="Foto de visitante" class="profile-pic">
                     @endauth
                 </div>
@@ -161,7 +195,7 @@
                             <strong>{{ auth()->user()->name }}</strong>
                             <span>{{ auth()->user()->email }}</span>
                         </div>
-                        <ul>    
+                        <ul>
                             <li><a href="{{ route('profile.show', ['user' => auth()->user()]) }}">Meu Perfil</a></li>
                             <li><a href="#">Configurações</a></li>
                         </ul>
@@ -231,5 +265,7 @@
             });
         });
     </script>
+    @livewireScripts
+    @stack('scripts')
 </body>
 </html>
