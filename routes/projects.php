@@ -28,5 +28,6 @@ Route::controller(ProjectController::class)->group(function () {
     // Membros
     Route::get('/projetos/{project}/membros', 'members')->name('projects.members');
     Route::get('/projetos/{project}/tarefas', [ProjectController::class, 'tasks'])->name('projects.tasks');
+    Route::get('/projetos/{project}/gerir-membros', [ProjectController::class, 'manageMembers'])->name('projects.manageMembers');
 
 });

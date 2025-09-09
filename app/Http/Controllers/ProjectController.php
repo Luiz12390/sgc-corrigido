@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProjectController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index($filter = null)
     {
         $query = Project::query();
@@ -34,30 +37,28 @@ class ProjectController extends Controller
         return view('projects.create');
     }
 
-    // Em app/Http/Controllers/ProjectController.php
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'objectives' => 'required|string',
+            'cover_image_path' => 'nullable|image|max:2048',
+        ]);
 
-public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string|max:255',
-        'objectives' => 'required|string',
-        'cover_image_path' => 'nullable|image|max:2048',
-    ]);
+        if ($request->hasFile('cover_image_path')) {
+            $path = $request->file('cover_image_path')->store('project-covers', 'public');
+            $validatedData['cover_image_path'] = $path;
+        }
 
-    if ($request->hasFile('cover_image_path')) {
-        $path = $request->file('cover_image_path')->store('project-covers', 'public');
-        $validatedData['cover_image_path'] = $path;
+        $project = Project::create($validatedData);
+
+        if ($project) {
+            $project->members()->attach(auth()->id());
+        }
+
+        return redirect()->route('projects.index')->with('status', 'Projeto criado com sucesso!');
     }
-
-    $project = Project::create($validatedData);
-
-    if ($project) {
-        $project->members()->attach(auth()->id());
-    }
-
-    return redirect()->route('projects.index')->with('status', 'Projeto criado com sucesso!');
-}
 
     public function edit(Project $project)
     {
@@ -110,5 +111,12 @@ public function store(Request $request)
         return view('projects.tasks', [
             'project' => $project
         ]);
+    }
+
+    public function manageMembers(Project $project)
+    {
+        $this->authorize('update', $project);
+
+        return view('projects.manage-members', ['project' => $project]);
     }
 }

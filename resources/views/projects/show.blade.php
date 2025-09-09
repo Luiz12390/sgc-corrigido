@@ -41,13 +41,20 @@
             <nav class="breadcrumbs">
                 <a href="{{ route('projects.index') }}">Projetos</a> / <span>{{ Str::limit($project->title, 30) }}</span>
             </nav>
-            <div class="page-actions">
-                <a href="{{ route('projects.edit', $project) }}" class="btn btn-secondary">Editar Projeto</a>
-                <form action="{{ route('projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este projeto?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn" style="background-color: #e53e3e; color: white;">Excluir Projeto</button>
-                </form>
+            <div class="project-actions" style="margin-left: auto;"> {{-- Adicionado margin-left para alinhar à direita --}}
+                @auth
+                    @can('update', $project)
+                        {{-- Botões para o dono do projeto --}}
+                        {{-- <a href="#" class="btn btn-primary">Editar Projeto</a> --}}
+                        <a href="{{ route('projects.manageMembers', $project) }}" class="btn btn-secondary">Gerir Membros</a>
+                    @else
+                        {{-- Botão para visitantes e outros utilizadores --}}
+                        <livewire:request-to-join-project-button :project="$project" />
+                    @endcan
+                @else
+                    {{-- Botão para utilizadores não logados --}}
+                    <livewire:request-to-join-project-button :project="$project" />
+                @endauth
             </div>
         </div>
     </div>

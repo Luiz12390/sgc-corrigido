@@ -12,6 +12,7 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         $users = User::where('id', '>', 2)->get();
+        $adminUser = User::where('email', 'admin@sgc.com')->first();
         $orgAdmin = Organization::where('name', 'Organização Admin')->first();
 
         if ($users->isEmpty()) {
@@ -19,11 +20,12 @@ class ProjectSeeder extends Seeder
             return;
         }
 
-        if ($orgAdmin) {
+        if ($adminUser && $orgAdmin) {
             Project::factory()->create([
                 'title' => 'Iniciativa Cidade Inteligente',
                 'description' => 'Desenvolvendo soluções para desafios urbanos.',
                 'organization_id' => $orgAdmin->id,
+                'user_id' => $adminUser->id,
             ]);
         }
 

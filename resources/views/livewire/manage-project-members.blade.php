@@ -1,7 +1,7 @@
 <div>
-    <div class="management-card">
+    <div class="management-card mb-8">
         <div class="management-card-header">
-            <h2>Pedidos Pendentes ({{ $pendingRequests->count() }})</h2>
+            <h2 class="text-2xl font-semibold mb-4">Pedidos Pendentes ({{ $pendingRequests->count() }})</h2>
         </div>
         <div class="management-card-body">
             @forelse ($pendingRequests as $request)
@@ -26,7 +26,7 @@
 
     <div class="management-card">
         <div class="management-card-header">
-            <h2>Membros Atuais ({{ $currentMembers->count() }})</h2>
+            <h2 class="text-2xl font-semibold mb-4">Membros Atuais ({{ $currentMembers->count() }})</h2>
         </div>
         <div class="management-card-body">
             @forelse ($currentMembers as $member)
@@ -35,13 +35,12 @@
                         <img class="user-avatar" src="{{ $member->profile_photo_url }}" alt="{{ $member->name }}">
                         <div class="user-details">
                             <p class="user-name">{{ $member->name }}</p>
-                            <p class="user-meta">Membro desde {{ $member->pivot->created_at->format('d/m/Y') }} | Role: {{ ucfirst($member->pivot->role) }}</p>
+                            <p class="user-meta">Membro desde {{ $member->pivot->created_at->format('d/m/Y') }}</p>
                         </div>
                     </div>
-                    {{-- Aqui você pode adicionar um botão para remover o membro no futuro --}}
                 </div>
             @empty
-                 <p class="text-gray-500">Ainda não há membros nesta organização.</p>
+                <p class="text-gray-500">Este projeto ainda não tem membros.</p>
             @endforelse
         </div>
     </div>

@@ -47,4 +47,14 @@ class Project extends Model
 
         return 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&auto=format&fit=crop';
     }
+
+    public function joinRequests()
+    {
+        return $this->hasMany(ProjectJoinRequest::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
