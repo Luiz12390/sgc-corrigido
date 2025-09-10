@@ -16,9 +16,7 @@ class ProjectController extends Controller
         $query = Project::query();
 
         if ($filter === 'meus-projetos') {
-            $query->whereHas('members', function($q) {
-                $q->where('user_id', auth()->id());
-            });
+            $query->where('user_id', auth()->id());
         }
 
         $projects = $query->latest()->paginate(10);
@@ -45,6 +43,9 @@ class ProjectController extends Controller
             'objectives' => 'required|string',
             'cover_image_path' => 'nullable|image|max:2048',
         ]);
+
+        $validatedData['user_id'] = auth()->id();
+        $validatedData['organization_id'] = 1;
 
         if ($request->hasFile('cover_image_path')) {
             $path = $request->file('cover_image_path')->store('project-covers', 'public');

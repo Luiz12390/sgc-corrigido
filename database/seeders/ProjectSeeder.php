@@ -21,12 +21,17 @@ class ProjectSeeder extends Seeder
         }
 
         if ($adminUser && $orgAdmin) {
-            Project::factory()->create([
-                'title' => 'Iniciativa Cidade Inteligente',
-                'description' => 'Desenvolvendo soluções para desafios urbanos.',
-                'organization_id' => $orgAdmin->id,
-                'user_id' => $adminUser->id,
-            ]);
+             $project = Project::updateOrCreate(
+                ['title' => 'Iniciativa Cidade Inteligente'],
+                [
+                    'description' => 'Desenvolvendo soluções para desafios urbanos.',
+                    'organization_id' => $orgAdmin->id,
+                    'user_id' => $adminUser->id,
+                    'status' => 'Em Andamento',
+                ]
+            );
+
+            $project->members()->syncWithoutDetaching($adminUser->id);
         }
 
         Project::factory(12)->create()->each(function ($project) use ($users) {
