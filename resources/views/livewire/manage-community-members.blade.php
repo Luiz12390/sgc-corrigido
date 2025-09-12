@@ -54,10 +54,9 @@
             @empty
                 <div class="empty-state">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.962A3 3 0 013 10.5V12a9 9 0 0118 0v-1.5a3 3 0 01-3-3m-12.15-2.433A9 9 0 0112 3.75v1.5a3 3 0 01-3 3m-3.75 2.155A5.986 5.986 0 003 10.5a3 3 0 01-3-3" /></svg>
-                    <p>Ainda não há membros nesta organização.</p>
+                    <p>Esta comunidade ainda não tem membros.</p>
                 </div>
             @endforelse
         </div>
     </div>
 </div>
-

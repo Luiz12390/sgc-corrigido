@@ -1,11 +1,518 @@
 @import 'tailwindcss';
+/* ================== VARIÁVEIS GLOBAIS ================== */
+:root {
+    --primary-color: #2D8A81;
+    --white-color: #ffffff;
+    --background-color: #f7f8fa;
+    --card-background-color: #ffffff;
+    --text-color: #333;
+    --gray-text-color: #6c757d;
+    --border-color: #e9ecef;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* ================== RESET & BASE ================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+img {
+    max-width: 100%;
+    display: block;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* ================== BOTÕES ================== */
+.btn {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover {
+    background-color: #256e67;
+    border-color: #256e67;
+}
+.btn-secondary {
+    background-color: var(--card-background-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+/* ================== HEADER ================== */
+.main-header { background-color: var(--card-background-color); border-bottom: 1px solid var(--border-color); padding: 1rem 2.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+.header-left { display: flex; align-items: center; gap: 2.5rem; }
+.logo { font-weight: 700; font-size: 1.25rem; display: flex; align-items: center; gap: 8px; }
+.logo::before { content: ''; display: inline-block; width: 22px; height: 22px; background-color: #000; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+.main-nav ul { display: flex; list-style-type: none; gap: 2rem; align-items: center; }
+.main-nav a { font-weight: 500; color: var(--gray-text-color); transition: color 0.3s ease; }
+.main-nav a:hover, .main-nav a.active { color: var(--primary-color); }
+.header-right { display: flex; align-items: center; gap: 1.5rem; }
+.header-search { display: flex; align-items: center; background-color: var(--background-color); padding: 0.5rem 1rem; border-radius: 8px; width: 250px; cursor: pointer; }
+.header-search svg { width: 16px; height: 16px; stroke: var(--gray-text-color); flex-shrink: 0; }
+.header-search span { margin-left: 0.5rem; font-family: 'Poppins', sans-serif; color: var(--gray-text-color); }
+
+/* ================== NAV DROPDOWN ================== */
+.nav-item-dropdown { position: relative; }
+.nav-link-dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+.nav-link-dropdown-toggle svg { width: 12px; height: 12px; transition: transform 0.2s ease; }
+.nav-dropdown-menu {
+position: absolute;top: 140%;left: 50%;transform: translateX(-50%);background-color: var(--card-background-color);border: 1px solid var(--border-color);border-radius: 10px;box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);min-width: 240px;z-index: 1100;padding: 0.5rem;}
+.nav-dropdown-item { display: block; padding: 0.75rem 1rem; font-size: 0.9rem; border-radius: 6px; transition: background-color 0.2s ease; white-space: nowrap; }
+.nav-dropdown-item:hover { background-color: var(--background-color); color: var(--primary-color); }
+
+/* Em public/css/app.css */
+
+/* ================== PROFILE DROPDOWN ================== */
+.profile-dropdown {
+    position: relative;
+}
+.profile-dropdown .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+.dropdown-menu {
+    /* A linha 'display: none;' foi REMOVIDA daqui */
+    position: absolute;
+    top: 130%;
+    right: 0;
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 240px;
+    z-index: 1100;
+}
+.dropdown-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.dropdown-header strong {
+    display: block;
+    font-size: 0.95rem;
+}
+.dropdown-header span {
+    font-size: 0.85rem;
+    color: var(--gray-text-color);
+}
+.dropdown-menu ul {
+    list-style: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.dropdown-menu li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+.dropdown-menu li a:hover {
+    background-color: var(--background-color);
+}
+.logout-form {
+    padding: 0.5rem;
+}
+.logout-form button {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    color: #e53e3e;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+}
+.logout-form button:hover {
+    background-color: #fff5f5;
+}
+.guest-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: var(--background-color);
+    color: var(--gray-text-color);
+    border: 1px solid var(--border-color);
+}
+
+/* ================== CONTEÚDO ================== */
+.card {
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+.content-section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* ================== PAGINAÇÃO ================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 3rem;
+}
+.page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background-color);
+    font-weight: 500;
+    color: var(--gray-text-color);
+    transition: all 0.3s ease;
+    box-shadow: var(--box-shadow);
+    line-height: 1;
+}
+.page-item .page-link:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.page-item.active .page-link {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-color: var(--primary-color);
+    z-index: 3;
+}
+.page-item.disabled .page-link,
+.page-item.disabled span.page-link {
+    color: #ccc;
+    cursor: default;
+    background-color: var(--background-color);
+    border-color: var(--border-color);
+    box-shadow: none;
+}
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+    padding: 0;
+    font-size: 0;
+}
+.page-link[rel="prev"]::before,
+.page-link[rel="next"]::before {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.page-link[rel="prev"]::before {
+    content: '\003C';
+}
+.page-link[rel="next"]::before {
+    content: '\003E';
+}
+
+/* ================== ORGANIZAÇÕES - LISTAGEM ================== */
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+.page-header {
+    margin-bottom: 2rem;
+}
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--gray-text-color);
+    margin-top: 0.5rem;
+}
+.page-search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+}
+.page-search-bar svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--gray-text-color);
+    flex-shrink: 0;
+}
+.page-search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    margin-left: 0.75rem;
+    width: 100%;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+.org-card {
+    text-decoration: none;
+    color: inherit;
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.org-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+.card-header-logo {
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.logo-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+.card-header-logo h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.card-header-logo p {
+    font-size: 0.9rem;
+    color: var(--gray-text-color);
+}
+.card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+.card-body p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--gray-text-color);
+}
+.pagination-container {
+    margin-top: 2.5rem;
+}
+
+
+/* ================== PÁGINA DE GESTÃO (MEMBROS/PEDIDOS) - VERSÃO ENFEITADA ================== */
+.management-card {
+    margin-bottom: 2.5rem;
+}
+
+.management-card-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.management-card-header .card-title {
+    font-size: 1.2rem; /* Um pouco menor que o título da página */
+}
+
+.management-card-body {
+    padding-top: 1rem;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem; /* Padding uniforme */
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 8px;
+}
+.list-item:not(:first-child) {
+    margin-top: 0.5rem;
+}
+.list-item:hover {
+    background-color: var(--background-color);
+}
+
+.user-info { display: flex; align-items: center; gap: 1rem; }
+.user-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.user-details .user-name { font-weight: 600; color: var(--text-color); }
+.user-details .user-meta { font-size: 0.875rem; color: var(--gray-text-color); }
+.action-buttons { display: flex; gap: 0.75rem; }
+
+/* Botões com ícones e mais estilo */
+.btn-approve, .btn-reject {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+}
+.btn-approve { background-color: var(--primary-color); }
+.btn-reject { background-color: #e53e3e; }
+.btn-approve svg, .btn-reject svg { width: 16px; height: 16px; }
+
+/* Estilo para quando não há itens na lista */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-text-color);
+}
+.empty-state svg {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem auto;
+    stroke-width: 1.5;
+    color: #cbd5e1;
+}
+/* ================== MODAL DE BUSCA GLOBAL ================== */
+
+/* O container principal que ocupa a tela toda */
+.search-modal-container {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start; /* Alinha no topo */
+    justify-content: center;
+    padding-top: 6rem; /* Distância do topo (1/4 da tela aprox.) */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    z-index: 5000; /* Z-index MUITO ALTO para ficar por cima de tudo */
+}
+
+/* O fundo preto semi-transparente */
+.search-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+/* A caixa branca do modal */
+.search-modal-content {
+    position: relative; /* Fica por cima do overlay */
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 48rem; /* ~768px */
+    width: 100%;
+    padding: 1.5rem;
+}
+
+/* --- Estilos para o conteúdo DENTRO do modal --- */
+
+.search-modal-input-wrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.search-modal-icon {
+    width: 24px;
+    height: 24px;
+    stroke: var(--gray-text-color);
+    flex-shrink: 0;
+}
+
+.search-modal-input {
+    width: 100%;
+    border: none;
+    font-size: 1.125rem;
+    margin-left: 1rem;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+}
+.search-modal-input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.search-modal-results {
+    margin-top: 1rem;
+    max-height: 24rem; /* 384px */
+    overflow-y: auto;
+}
+
+.search-modal-results h3 {
+    font-weight: 600;
+    color: var(--gray-text-color);
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+.search-modal-results ul {
+    list-style: none;
+}
+
+.search-result-item a {
+    display: block;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.search-result-item a:hover {
+    background-color: var(--background-color);
+}
+
+.search-result-item .result-title {
+    font-weight: 600;
+}
+
+.search-result-item .result-description {
+    font-size: 0.875rem;
+    color: var(--gray-text-color);
 }

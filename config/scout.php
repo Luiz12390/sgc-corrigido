@@ -206,4 +206,14 @@ return [
         ],
     ],
 
+    'tntsearch' => [
+        'storage'  => storage_path('app/tntsearch'),
+        'fuzziness' => env('TNTSEARCH_FUZZINESS', false),
+        'fuzzy' => [
+            'prefix_length' => 2,
+            'max_expansions' => 50,
+        ],
+        'asYouType' => false,
+    ],
+
 ];

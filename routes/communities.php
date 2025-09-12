@@ -10,8 +10,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/comunidade', [CommunityController::class, 'index'])->name('communities.index');
-
-
-Route::get('/comunidade/exemplo', function () {
-    return view('communities.show');
-})->name('communities.show');
+Route::get('/comunidade/{community}', [CommunityController::class, 'show'])->name('communities.show');
+Route::get('/comunidade/{community}/manage-members', [CommunityController::class, 'manageMembers'])->name('communities.manageMembers');

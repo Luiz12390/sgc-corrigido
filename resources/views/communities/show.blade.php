@@ -117,8 +117,11 @@
             <p>1.234 Membros</p>
         </div>
         <div class="community-actions">
-            <button class="btn btn-secondary">Convidar</button>
-            <button class="btn btn-primary">Sair da Comunidade</button>
+            @can('update', $community)
+                <a href="{{ route('communities.manageMembers', $community) }}" class="btn btn-secondary">Gerir Membros</a>
+            @else
+                <livewire:request-to-join-community-button :community="$community" />
+            @endcan
         </div>
     </div>
 

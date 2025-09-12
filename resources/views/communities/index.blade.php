@@ -135,7 +135,7 @@
                         <div class="card-text">
                             <h3>{{ $community->name }}</h3>
                             <p>{{ $community->description }}</p>
-                            <a href="#" class="btn-join">Entrar</a>
+                            <a href="{{ route('communities.show', $community) }}" class="btn-join">Entrar</a>
                         </div>
                         <img src="{{ $community->cover_image_path }}" alt="Imagem da comunidade {{ $community->name }}" class="card-image">
                     </div>
