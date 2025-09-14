@@ -52,7 +52,7 @@
 
                     <li><a href="{{ route('organizations.index') }}" class="{{ request()->routeIs('organizations.*') ? 'active' : '' }}">Organizações</a></li>
                     <li><a href="{{ route('communities.index') }}" class="{{ request()->routeIs('communities.*') ? 'active' : '' }}">Comunidade</a></li>
-                    <li><a href="{{ route('resources.index') }}" class="{{ request()->routeIs('resources.*') ? 'active' : '' }}">Recursos</a></li>
+                    <li><a href="{{ route('recursos.index') }}" class="{{ request()->routeIs('resources.*') ? 'active' : '' }}">Recursos</a></li>
                 </ul>
             </nav>
         </div>
