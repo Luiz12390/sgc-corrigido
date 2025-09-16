@@ -7,7 +7,7 @@ use App\Models\Task;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
-use Carbon\Carbon; // 👈 Adicionar Carbon
+use Carbon\Carbon;
 
 class ProjectTasks extends Component
 {
@@ -17,17 +17,15 @@ class ProjectTasks extends Component
     public ?Task $editingTask = null;
     public $editingTaskState = [];
 
-    // Propriedades para o calendário
-    public $currentDate; // 👈 Adicionar para controlar o mês do calendário
+    public $currentDate;
 
     public function mount(Project $project)
     {
         $this->project = $project->load('members', 'tasks.user');
         $this->editingTask = new Task();
-        $this->currentDate = Carbon::now(); // 👈 Inicializa o calendário com a data atual
+        $this->currentDate = Carbon::now();
     }
 
-    // 👇 Métodos para navegação do calendário
     public function goToNextMonth()
     {
         $this->currentDate->addMonth();
@@ -45,26 +43,19 @@ class ProjectTasks extends Component
         $completedTasks = $tasks->where('status', 'Concluído')->count();
         $progressPercentage = ($totalTasks > 0) ? round(($completedTasks / $totalTasks) * 100) : 0;
 
-        // Mantém a lógica do Kanban
         $groupedTasks = $tasks->groupBy('status');
-
-        // 👇 Prepara os dados para o calendário
         $firstDayOfMonth = $this->currentDate->copy()->firstOfMonth();
         $lastDayOfMonth = $this->currentDate->copy()->lastOfMonth();
 
-        // Otimização: Filtra tarefas do mês e agrupa por dia
         $tasksForCalendar = $tasks->whereBetween('due_date', [$firstDayOfMonth, $lastDayOfMonth])
             ->groupBy(function ($task) {
-                return Carbon::parse($task->due_date)->format('j'); // Agrupa pelo número do dia
+                return Carbon::parse($task->due_date)->format('j');
             });
 
         return view('livewire.project-tasks', [
-            // Dados para Kanban e progresso
             'tasks' => $tasks,
             'groupedTasks' => $groupedTasks,
             'progressPercentage' => $progressPercentage,
-
-            // Dados para o Calendário
             'monthName'      => ucfirst($this->currentDate->translatedFormat('F Y')),
             'daysInMonth'    => $this->currentDate->daysInMonth,
             'startDayOfWeek' => $firstDayOfMonth->dayOfWeek,

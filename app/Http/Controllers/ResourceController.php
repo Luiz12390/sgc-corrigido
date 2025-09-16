@@ -58,7 +58,24 @@ class ResourceController extends Controller
     public function update(Request $request, Resource $recurso)
     {
         $this->authorize('update', $recurso);
-        return redirect()->route('resources.show', $recurso)->with('status', 'Recurso atualizado!');
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'nullable|string|max:255',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,zip,ppt,pptx|max:20480',
+        ]);
+
+        if ($request->hasFile('file')) {
+            if ($recurso->file_path) {
+                Storage::disk('public')->delete($recurso->file_path);
+            }
+            $validated['file_path'] = $request->file('file')->store('resource_files', 'public');
+        }
+
+        $recurso->update($validated);
+
+        return redirect()->route('recursos.show', $recurso)->with('status', 'Recurso atualizado com sucesso!');
     }
 
     public function destroy(Resource $recurso)

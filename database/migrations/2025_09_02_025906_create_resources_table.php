@@ -8,7 +8,7 @@ return new class extends Migration {
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
             $table->string('type')->nullable();
@@ -17,5 +17,6 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+
     public function down(): void { Schema::dropIfExists('resources'); }
 };

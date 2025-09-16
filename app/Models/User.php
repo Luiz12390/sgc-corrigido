@@ -90,4 +90,12 @@ class User extends Authenticatable
     public function communities() {
         return $this->belongsToMany(Community::class)->withTimestamps()->withPivot('role');
     }
+
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Adicionar Novo Recurso | SGC-Chapecó')
+@section('title', 'Editar Recurso | SGC-Chapecó')
 
 @push('styles')
 <style>
-    /* Estilos específicos para a página de formulário, seguindo o seu padrão */
+    /* Exatamente os mesmos estilos da página de criação */
     .form-page-container { max-width: 800px; margin: 2.5rem auto; padding: 2.5rem; }
     .form-page-header h1 { font-size: 2rem; font-weight: 600; margin-bottom: 2rem; }
     .form-group { margin-bottom: 1.5rem; }
@@ -19,35 +19,38 @@
 @section('content')
 <div class="form-page-container">
     <div class="form-page-header">
-        <h1>Adicionar Novo Recurso</h1>
+        <h1>Editar Recurso</h1>
     </div>
     <div class="card">
-        <form action="{{ route('recursos.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('recursos.update', $resource) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
+
             <div class="form-group">
                 <label for="title">Título</label>
-                <input type="text" name="title" id="title" value="{{ old('title') }}" required>
-                @error('title') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                <input type="text" name="title" id="title" value="{{ old('title', $resource->title) }}" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Descrição</label>
-                <textarea name="description" id="description" rows="5" required>{{ old('description') }}</textarea>
-                @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                <textarea name="description" id="description" rows="5" required>{{ old('description', $resource->description) }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="type">Tipo de Recurso</label>
-                <input type="text" name="type" id="type" value="{{ old('type') }}" placeholder="Ex: PDF, Artigo, Estudo de Caso">
+                <input type="text" name="type" id="type" value="{{ old('type', $resource->type) }}">
             </div>
 
             <div class="form-group">
-                <label for="file">Ficheiro (PDF, DOC, ZIP, etc. - Máx 20MB)</label>
-                <input type="file" name="file" id="file" required>
-                @error('file') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                <label for="file">Substituir Ficheiro (Opcional)</label>
+                @if ($resource->file_path)
+                    <p class="text-sm text-gray-500 mb-2">Ficheiro atual: {{ basename($resource->file_path) }}</p>
+                @endif
+                <input type="file" name="file" id="file">
+                <p class="text-xs text-gray-500 mt-1">Envie um novo ficheiro apenas se quiser substituir o atual.</p>
             </div>
 
-            <button type="submit" class="btn-submit">Enviar Recurso</button>
+            <button type="submit" class="btn-submit">Salvar Alterações</button>
         </form>
     </div>
 </div>

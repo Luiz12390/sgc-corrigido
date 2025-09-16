@@ -68,4 +68,9 @@ class Project extends Model
             'description' => $this->description,
         ];
     }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }

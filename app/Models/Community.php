@@ -38,4 +38,20 @@ class Community extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function posts() {
+        return $this->hasMany(Post::class)->latest();
+    }
+
+    public function getLogoUrlAttribute()
+    {
+        if ($this->logo_path) {
+            if (str_starts_with($this->logo_path, 'http')) {
+                return $this->logo_path;
+            }
+            return asset('storage/' . $this->logo_path) . '?v=' . $this->updated_at?->timestamp;
+        }
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&size=160&background=EBF4FF&color=7F9CF5';
+    }
 }

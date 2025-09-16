@@ -14,28 +14,31 @@ class ProjectsIndex extends Component
 
     #[Url(as: 'q')]
     public $search = '';
-
     #[Url]
     public $status = 'all';
-
     #[Url]
     public $filter = '';
 
     public function render()
     {
-        $query = Project::query();
+        if (!Auth::check() && in_array($this->filter, ['meus-projetos', 'minha-empresa'])) {
+            return redirect()->route('login');
+        }
+
+        $query = Project::query()->with('user', 'organization');
 
         if ($this->filter === 'meus-projetos') {
-            $query->whereHas('members', function ($q) {
-                $q->where('user_id', Auth::id());
+            $query->where(function ($q) {
+                $q->where('user_id', Auth::id())
+                  ->orWhereHas('members', function ($subQ) {
+                      $subQ->where('users.id', Auth::id());
+                  });
             });
+
         } elseif ($this->filter === 'minha-empresa') {
-            $organization = Auth::user()->organizations()->first();
-            if ($organization) {
-                $memberIds = $organization->members()->pluck('users.id');
-                $query->whereHas('members', function ($q) use ($memberIds) {
-                    $q->whereIn('user_id', $memberIds);
-                });
+            $organizationIds = Auth::user()->organizations()->pluck('organizations.id');
+            if ($organizationIds->isNotEmpty()) {
+                $query->whereIn('organization_id', $organizationIds);
             } else {
                 $query->whereRaw('1 = 0');
             }
@@ -52,7 +55,10 @@ class ProjectsIndex extends Component
             $query->where('status', $this->status);
         }
 
-        $featuredProject = Project::latest()->first();
+        $featuredProject = ($this->filter || $this->search || $this->status !== 'all')
+            ? null
+            : Project::latest()->first();
+
         $projects = $query->latest()->paginate(10);
 
         return view('livewire.projects-index', [

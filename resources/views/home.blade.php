@@ -148,7 +148,7 @@
             <h2 class="content-section-title">Conteúdo Recomendado</h2>
             <div class="grid-container">
                 @forelse ($recommendedResources as $resource)
-                <a href="{{ route('resources.show', $resource) }}" class="content-card">
+                <a href="{{ route('recursos.show', $resource) }}" class="content-card">
                     <img src="{{ $resource->cover_image_url }}" alt="Imagem do Recurso" class="card-image">
                     <div class="card-content">
                         <h4>{{ $resource->title }}</h4>
