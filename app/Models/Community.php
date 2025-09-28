@@ -54,4 +54,10 @@ class Community extends Model
 
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&size=160&background=EBF4FF&color=7F9CF5';
     }
+
+    public function recordActivity($type, $subject)
+    {
+        // Esta lógica pode ser expandida para criar atividades para todos os membros
+        // Por agora, vamos focar no autor.
+    }
 }

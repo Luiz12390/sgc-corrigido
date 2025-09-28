@@ -16,8 +16,11 @@
     .resources-index-page .card-text h4 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color); }
     .resources-index-page .card-text p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-text-color); }
     .resources-index-page .card-image { width: 220px; height: 140px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+    .content-search-bar { display: flex; align-items: center; background-color: var(--card-background-color); border: 1px solid var(--border-color); padding: 0.75rem 1.25rem; border-radius: 8px; margin-bottom: 2.5rem; }
+    .content-search-bar input { border: none; background: none; outline: none; margin-left: 0.75rem; width: 100%; font-size: 1rem; font-family: 'Poppins', sans-serif; }
+    .content-area h1 { font-size: 2rem; font-weight: 600; }
+    .content-area > p { font-size: 1rem; color: var(--gray-text-color); margin-top: 0.5rem; margin-bottom: 2rem; }
 </style>
-
 <div class="resources-index-page">
     <div class="page-container">
         <aside class="filters-sidebar card">
@@ -26,12 +29,14 @@
         </aside>
 
         <main class="content-area">
-            <div class="flex justify-between items-center mb-4">
-                <div>
-                    <h1>Repositório de Conhecimento</h1>
-                    <p>Explore artigos, relatórios, estudos de caso e muito mais.</p>
-                </div>
-                <a href="{{ route('recursos.create') }}" class="btn btn-primary">Adicionar Recurso</a>
+            <div>
+                <h1>Repositório de Conhecimento</h1>
+                <p>Explore artigos, relatórios, estudos de caso e muito mais.</p>
+                <br
+            </div>
+
+            <div class="content-search-bar">
+                <input wire:model.live.debounce.300ms="search" type="text" placeholder="Buscar por projetos...">
             </div>
 
             @if (session('status'))

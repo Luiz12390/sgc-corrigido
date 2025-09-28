@@ -19,6 +19,7 @@
                         <img src="{{ $organization->logo_url }}" alt="Logo de {{ $organization->name }}" class="logo-img">
                         <h4>{{ $organization->name }}</h4>
                         <p>{{ $organization->type ?? 'Organização' }}</p>
+                        <p>{{ $organization->members->count() }} {{ Str::plural('membro', $organization->members->count()) }}</p>
                     </div>
                     <div class="card-body">
                         <p>{{ Str::limit($organization->description, 150) }}</p>

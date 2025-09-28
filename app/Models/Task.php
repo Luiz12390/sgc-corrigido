@@ -32,4 +32,9 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function activities()
+    {
+        return $this->morphMany(\App\Models\Activity::class, 'subject');
+    }
 }

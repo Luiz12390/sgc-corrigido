@@ -23,4 +23,9 @@ class Event extends Model
         }
         return 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800';
     }
+
+    public function activities()
+    {
+        return $this->morphMany(\App\Models\Activity::class, 'subject');
+    }
 }

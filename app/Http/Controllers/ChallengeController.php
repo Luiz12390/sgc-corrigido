@@ -32,26 +32,23 @@ class ChallengeController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'type' => 'required|string',
-            'description' => 'required|string',
-            'cover_image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'type' => 'required|string',
+        'description' => 'required|string',
+        'cover_image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'organization_id' => 'required|exists:organizations,id',
+    ]);
 
-        $imagePath = null;
-        if ($request->hasFile('cover_image_path')) {
-            $imagePath = $request->file('cover_image_path')->store('challenge-covers', 'public');
-        }
+    $validatedData['user_id'] = auth()->id();
 
-        Challenge::create([
-            'title' => $validatedData['title'],
-            'type' => $validatedData['type'],
-            'description' => $validatedData['description'],
-            'cover_image_path' => $imagePath ? 'storage/' . $imagePath : null,
-        ]);
-
-        return redirect()->route('challenges.index')->with('status', 'Desafio criado com sucesso!');
+    if ($request->hasFile('cover_image_path')) {
+        $validatedData['cover_image_path'] = $request->file('cover_image_path')->store('challenge-covers', 'public');
     }
+
+    Challenge::create($validatedData);
+
+    return redirect()->route('challenges.index')->with('status', 'Desafio criado com sucesso!');
+}
 }

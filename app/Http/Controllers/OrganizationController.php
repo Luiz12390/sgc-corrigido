@@ -78,4 +78,33 @@ class OrganizationController extends Controller
 
         return redirect()->route('organizations.show', $organization)->with('status', 'Organização atualizada com sucesso!');
     }
+
+    public function create()
+    {
+        return view('organizations.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'logo_path' => 'nullable|image|max:2048',
+            'type' => 'nullable|string',
+            'specialization_areas' => 'nullable|string',
+            'competencies' => 'nullable|string',
+            'available_resources' => 'nullable|string',
+        ]);
+
+        $validatedData['owner_id'] = auth()->id();
+
+        if ($request->hasFile('logo_path')) {
+            $validatedData['logo_path'] = $request->file('logo_path')->store('organization-logos', 'public');
+        }
+
+        $organization = Organization::create($validatedData);
+        $organization->members()->attach(auth()->id(), ['role' => 'owner']);
+
+        return redirect()->route('organizations.show', $organization)->with('status', 'Organização criada com sucesso!');
+    }
 }

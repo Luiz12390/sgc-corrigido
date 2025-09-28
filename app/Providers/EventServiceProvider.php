@@ -6,6 +6,14 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Observers\PostObserver;
+use App\Observers\ProjectObserver;
+use App\Observers\ChallengeObserver;
+use App\Observers\ResourceObserver;
+use App\Models\Challenge;
+use App\Models\Project;
+use App\Models\Post;
+use App\Models\Resource;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,7 +33,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Post::observe(PostObserver::class);
+        Project::observe(ProjectObserver::class);
+        Challenge::observe(ChallengeObserver::class);
+        Resource::observe(ResourceObserver::class);
     }
 
     /**

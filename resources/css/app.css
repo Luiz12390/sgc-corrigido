@@ -71,10 +71,35 @@ img {
 .main-nav ul { display: flex; list-style-type: none; gap: 2rem; align-items: center; }
 .main-nav a { font-weight: 500; color: var(--gray-text-color); transition: color 0.3s ease; }
 .main-nav a:hover, .main-nav a.active { color: var(--primary-color); }
-.header-right { display: flex; align-items: center; gap: 1.5rem; }
-.header-search { display: flex; align-items: center; background-color: var(--background-color); padding: 0.5rem 1rem; border-radius: 8px; width: 250px; cursor: pointer; }
-.header-search svg { width: 16px; height: 16px; stroke: var(--gray-text-color); flex-shrink: 0; }
-.header-search span { margin-left: 0.5rem; font-family: 'Poppins', sans-serif; color: var(--gray-text-color); }
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-color);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    width: 250px;
+    cursor: pointer;
+}
+
+.header-search svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--gray-text-color);
+    flex-shrink: 0;
+}
+
+.header-search span {
+    margin-left: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--gray-text-color);
+    font-size: 0.9rem;
+}
 
 /* ================== NAV DROPDOWN ================== */
 .nav-item-dropdown { position: relative; }
@@ -613,4 +638,131 @@ position: absolute;top: 140%;left: 50%;transform: translateX(-50%);background-co
     display: flex;
     gap: 1rem;
     align-items: flex-start;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.activity-item .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--border-color);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.activity-item .icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.activity-details p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.activity-details span {
+    font-size: 0.8rem;
+    color: var(--gray-text-color);
+}
+
+/* ================== SUB-HEADER DA PÁGINA ================== */
+.page-subheader { background-color: var(--card-background-color); border-bottom: 1px solid var(--border-color); padding: 1rem 2.5rem; margin-bottom: 2.5rem; }
+.subheader-content { max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.breadcrumbs { font-size: 1rem; font-weight: 500; color: var(--gray-text-color); }
+.breadcrumbs a { color: var(--primary-color); text-decoration: none; }
+.breadcrumbs a:hover { text-decoration: underline; }
+
+/* ================== ESTILOS DOS CARDS (ORGANIZAÇÕES/COMUNIDADES) ================== */
+.index-page-container { max-width: 1400px; margin: 0 auto; padding: 0 2.5rem 2.5rem 2.5rem; }
+.index-page-header { margin-bottom: 2rem; }
+.index-page-header h1 { font-size: 2.5rem; font-weight: 700; }
+.index-page-header p { font-size: 1.1rem; color: var(--gray-text-color); margin-top: 0.5rem; }
+.page-search-bar { display: flex; align-items: center; background-color: var(--card-background-color); border: 1px solid var(--border-color); padding: 0.75rem 1.25rem; border-radius: 8px; margin-bottom: 2.5rem; }
+.page-search-bar input { border: none; background: none; outline: none; margin-left: 0.75rem; width: 100%; font-size: 1rem; }
+.org-grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+.org-card { text-decoration: none; color: inherit; background-color: var(--card-background-color); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.3s ease, transform 0.3s ease; }
+.org-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+.card-header-logo { padding: 2rem 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; border-bottom: 1px solid var(--border-color); }
+.logo-img { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; }
+.card-header-logo h4 { font-size: 1.25rem; font-weight: 600; }
+.card-header-logo p { font-size: 0.9rem; color: var(--gray-text-color); }
+.card-body { padding: 1.5rem; flex-grow: 1; }
+.card-body p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-text-color); }
+
+/* ================== PÁGINA DE LISTAGEM DE COMUNIDADES (DESIGN REFINADO) ================== */
+.community-index-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+
+.community-list-item {
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start; /* Alinha os itens no topo */
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.community-list-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+}
+
+.community-list-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.community-list-content {
+    flex-grow: 1;
+}
+
+.community-list-content h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.community-list-content p {
+    font-size: 1rem;
+    color: var(--gray-text-color);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+.community-list-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--gray-text-color);
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.25rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-item svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
 }

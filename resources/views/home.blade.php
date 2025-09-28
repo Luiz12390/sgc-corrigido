@@ -69,17 +69,44 @@
     <aside class="sidebar">
         <div class="card recent-activities">
             <h3 class="card-title">Atividades recentes</h3>
-            <p class="text-gray-500">Nenhuma atividade recente para exibir.</p>
+            <ul>
+                @forelse ($recentActivities as $activity)
+                        <li class="activity-item">
+                            <div class="icon">
+                                <a href="{{ route('profile.show', $activity->user) }}">
+                                    <img src="{{ $activity->user->profile_photo_url }}" alt="Foto de {{ $activity->user->name }}">
+                                </a>
+                            </div>
+                            <div class="activity-details">
+                                <p>
+                                    <a href="{{ route('profile.show', $activity->user) }}" class="font-bold hover:underline">{{ $activity->user->name }}</a>
+                                    @if ($activity->type === 'created_post' && $activity->subject)
+                                        publicou na comunidade <a href="..." class="font-semibold text-primary-500">{{ $activity->subject->community->name }}</a>
+                                    @elseif ($activity->type === 'created_project' && $activity->subject)
+                                        criou o projeto <a href="{{ route('projects.show', $activity->subject) }}" class="font-semibold text-primary-500">{{ $activity->subject->title }}</a>
+                                    @elseif ($activity->type === 'created_challenge' && $activity->subject)
+                                        lançou o desafio <a href="{{ route('challenges.show', $activity->subject) }}" class="font-semibold text-primary-500">{{ $activity->subject->title }}</a>
+                                    @elseif ($activity->type === 'created_resource' && $activity->subject)
+                                        partilhou o recurso <a href="{{ route('recursos.show', $activity->subject) }}" class="font-semibold text-primary-500">{{ $activity->subject->title }}</a>
+                                    @else
+                                        realizou uma nova atividade.
+                                    @endif
+                                </p>
+                                <span title="{{ $activity->created_at->format('d/m/Y H:i') }}">{{ $activity->created_at->diffForHumans() }}</span>
+                            </div>
+                        </li>
+                @empty
+                    <p class="text-gray-500">Nenhuma atividade recente para exibir.</p>
+                @endforelse
+            </ul>
         </div>
 
         <div class="card suggested-connections">
             <h3 class="card-title">Conexões Sugeridas</h3>
-            {{-- AQUI ESTÁ O HTML CORRIGIDO --}}
             <ul>
                 @forelse($suggestedUsers as $user)
                     <li>
                         <a href="{{ route('profile.show', $user) }}" class="connection-item">
-                            {{-- Usando o Accessor correto para a imagem --}}
                             <img src="{{ $user->profile_photo_url }}" alt="Foto de {{ $user->name }}" class="profile-pic">
                             <h4>{{ $user->name }}</h4>
                             <p>{{ $user->title }}</p>

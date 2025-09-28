@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
+use App\Models\Organization;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Challenge>
@@ -17,10 +19,12 @@ class ChallengeFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => ucwords($this->faker->bs()), // Gera um título de "buzzword" capitalizado
+            'title' => ucwords($this->faker->bs()),
             'type' => $this->faker->randomElement(['Artigo', 'Relatório', 'Estudo de Caso', 'Desafio Aberto']),
-            'description' => $this->faker->paragraph(3), // Gera um parágrafo de 3 sentenças
-            'cover_image_path' => 'https://picsum.photos/seed/' . $this->faker->unique()->word() . '/440/280', // Imagem aleatória
+            'description' => $this->faker->paragraph(3),
+            'cover_image_path' => 'https://picsum.photos/seed/' . $this->faker->unique()->word() . '/440/280',
+            'user_id' => User::inRandomOrder()->first()->id,
+            'organization_id' => Organization::inRandomOrder()->first()->id,
         ];
     }
 }

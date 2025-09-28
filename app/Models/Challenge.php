@@ -18,6 +18,7 @@ class Challenge extends Model
         'title',
         'type',
         'description',
+        'user_id',
         'cover_image_path',
     ];
 
@@ -46,5 +47,18 @@ class Challenge extends Model
         }
 
         return 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800&auto=format&fit=crop';
+    }
+
+    public function recordActivity($type)
+    {
+        $this->activities()->create([
+            'user_id' => $this->user_id,
+            'type' => $type,
+        ]);
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(\App\Models\Activity::class, 'subject');
     }
 }

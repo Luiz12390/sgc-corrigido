@@ -37,4 +37,23 @@ class CommunityController extends Controller
 
         return view('communities.manage-members', ['community' => $community]);
     }
+
+    public function create()
+    {
+        return view('communities.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $validatedData['user_id'] = auth()->id();
+        $community = Community::create($validatedData);
+        $community->members()->attach(auth()->id(), ['role' => 'admin']);
+
+        return redirect()->route('communities.show', $community)->with('status', 'Comunidade criada com sucesso!');
+    }
 }

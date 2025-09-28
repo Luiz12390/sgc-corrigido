@@ -24,4 +24,17 @@ class Post extends Model
     public function comments() {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'asc');
     }
+
+    public function recordActivity($type)
+    {
+        $this->activities()->create([
+            'user_id' => $this->user_id,
+            'type' => $type,
+        ]);
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(\App\Models\Activity::class, 'subject');
+    }
 }

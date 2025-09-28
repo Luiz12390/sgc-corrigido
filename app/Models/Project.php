@@ -73,4 +73,17 @@ class Project extends Model
     {
         return $this->belongsTo(Organization::class);
     }
+
+    public function recordActivity($type)
+    {
+        $this->activities()->create([
+            'user_id' => $this->user_id,
+            'type' => $type,
+        ]);
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(\App\Models\Activity::class, 'subject');
+    }
 }
