@@ -1,17 +1,22 @@
 <?php
-
 namespace App\Livewire;
 
 use App\Models\Community;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreatePost extends Component
 {
+    use WithFileUploads;
+
     public Community $community;
 
-    #[Rule('required|min:5|max:5000')]
+    #[Rule('required_without:files|min:3|max:5000')]
     public string $content = '';
+
+    #[Rule(['files.*' => 'file|max:20480'])]
+    public $files = [];
 
     public function mount(Community $community)
     {
@@ -22,12 +27,22 @@ class CreatePost extends Component
     {
         $this->validate();
 
-        $this->community->posts()->create([
+        $post = $this->community->posts()->create([
             'user_id' => auth()->id(),
             'content' => $this->content,
+            'post_type' => !empty($this->files) ? 'file' : 'text',
         ]);
 
-        $this->reset('content');
+        if (!empty($this->files)) {
+            foreach ($this->files as $file) {
+                $path = $file->store('post-attachments', 'public');
+                if ($post && !$post->file_path) {
+                    $post->update(['file_path' => $path]);
+                }
+            }
+        }
+
+        $this->reset(['content', 'files']);
         $this->dispatch('post-created');
     }
 

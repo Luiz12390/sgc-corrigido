@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Post;
+use App\Models\Activity;
 
 class PostObserver
 {
@@ -12,6 +13,13 @@ class PostObserver
     public function created(Post $post): void
     {
         $post->recordActivity('created_post');
+
+        Activity::create([
+            'user_id' => $post->user_id,
+            'type' => 'created_post',
+            'subject_id' => $post->id,
+            'subject_type' => Post::class,
+        ]);
     }
 
     /**
