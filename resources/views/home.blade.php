@@ -4,17 +4,20 @@
 
 @push('styles')
 <style>
-    /* ... (todos os outros estilos da home permanecem iguais) ... */
     .main-container { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; padding: 2rem 2.5rem; max-width: 1600px; margin: 0 auto; }
     .sidebar, .main-content { display: flex; flex-direction: column; gap: 2rem; }
     .recent-activities ul { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
     .activity-item { display: flex; align-items: center; gap: 1rem; }
     .activity-item .icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background-color: var(--background-color); }
-    .activity-item .icon img { width: 100%; border-radius: 50%; object-fit: cover; }
+    .activity-item .icon img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
     .activity-details p { font-size: 0.9rem; line-height: 1.4; }
     .activity-details span { font-size: 0.8rem; color: var(--gray-text-color); }
 
-    /* === INÍCIO DAS CORREÇÕES DE CSS === */
     .suggested-connections ul {
         list-style: none;
         display: flex;
@@ -23,9 +26,9 @@
     }
 
     .connection-item {
-        display: flex; /* Habilita o Flexbox */
-        flex-direction: column; /* Organiza os itens em coluna */
-        align-items: center; /* Centraliza horizontalmente */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
         padding: 1.5rem;
         border: 1px solid var(--border-color);
@@ -53,7 +56,6 @@
         color: var(--gray-text-color);
         line-height: 1.4;
     }
-    /* === FIM DAS CORREÇÕES DE CSS === */
 
     .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
     .content-card { text-decoration: none; color: inherit; border-radius: 10px; overflow: hidden; box-shadow: var(--box-shadow); border: 1px solid var(--border-color); background-color: var(--card-background-color); }

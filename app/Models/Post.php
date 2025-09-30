@@ -37,4 +37,9 @@ class Post extends Model
     {
         return $this->morphMany(\App\Models\Activity::class, 'subject');
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(PostAttachment::class);
+    }
 }

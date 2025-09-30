@@ -25,7 +25,10 @@ class CreatePost extends Component
 
     public function save()
     {
-        $this->validate();
+        $this->validate([
+            'content' => 'required|string|min:3',
+            'files.*' => 'nullable|file|max:10240',
+        ]);
 
         $post = $this->community->posts()->create([
             'user_id' => auth()->id(),
@@ -35,10 +38,12 @@ class CreatePost extends Component
 
         if (!empty($this->files)) {
             foreach ($this->files as $file) {
-                $path = $file->store('post-attachments', 'public');
-                if ($post && !$post->file_path) {
-                    $post->update(['file_path' => $path]);
-                }
+                $path = $file->store('attachments', 'public');
+                $originalName = $file->getClientOriginalName();
+                $post->attachments()->create([
+                    'file_path' => $path,
+                    'file_name' => $originalName,
+                ]);
             }
         }
 

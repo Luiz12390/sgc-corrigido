@@ -28,22 +28,34 @@
                 <p>{{ $post->content }}</p>
             </div>
 
-            {{-- BLOCO DE ANEXO CORRIGIDO --}}
-            @if ($post->file_path)
-                <div class="mt-4 border rounded-lg p-3">
-                    {{-- O erro de digitação foi corrigido aqui --}}
-                    <a href="{{ asset('storage/' . $post->file_path) }}" target="_blank" class="flex items-center gap-3 hover:text-primary-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
-                        <span class="font-semibold">Ver Anexo</span>
-                    </a>
+            @if ($post->attachments->isNotEmpty())
+                <div class="mt-4">
+                    <p class="text-sm font-semibold text-gray-600 mb-2">Anexos:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        @foreach($post->attachments as $attachment)
+
+                            @if($attachment->isImage())
+                                <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank" title="{{ $attachment->file_name }}">
+                                    <img src="{{ asset('storage/' . $attachment->file_path) }}"
+                                        alt="{{ $attachment->file_name }}"
+                                        class="rounded-lg object-cover h-32 w-full border hover:opacity-80 transition-opacity">
+                                </a>
+                            @else
+                                <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank"
+                                class="flex items-center gap-3 p-3 border rounded-lg hover:bg-gray-50 col-span-1">
+                                    {!! $attachment->icon !!}
+                                    <span class="font-semibold text-sm truncate">{{ $attachment->file_name }}</span>
+                                </a>
+                            @endif
+
+                        @endforeach
+                    </div>
                 </div>
             @endif
 
             <div class="comments-section">
-                {{-- A key foi simplificada para evitar erros de sintaxe --}}
                 @livewire('post-comments', ['post' => $post], key('comments-'.$post->id))
 
-                {{-- A verificação agora usa a variável $community que o componente PostFeed recebe --}}
                 @if(auth()->check() && auth()->user()->communities->contains($community))
                     @livewire('create-comment', ['post' => $post], key('create-comment-'.$post->id))
                 @endif
