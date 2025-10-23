@@ -86,6 +86,7 @@
                         <ul>
                             <li><a href="{{ route('profile.show', auth()->user()) }}">Meu Perfil</a></li>
                             <li><a href="{{ route('profile.edit') }}">Editar Perfil</a></li>
+                            <li><a href="{{ route('profile.security') }}">Senha e Segurança</a></li>
                         </ul>
                         <form method="POST" action="{{ route('logout') }}" class="logout-form">@csrf<button type="submit">Sair</button></form>
                     @else

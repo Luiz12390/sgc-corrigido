@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Redirect;
 
 class ProfileController extends Controller
 {
-    /**
-     * Exibe o perfil público de um usuário.
-     */
     public function show(User $user)
     {
         $user->load('organizations', 'projects');
@@ -20,19 +21,37 @@ class ProfileController extends Controller
         return view('users.profile', ['user' => $user]);
     }
 
-    /**
-     * Mostra o formulário para editar o perfil do usuário autenticado.
-     */
     public function edit()
     {
         return view('users.edit', [
-            'user' => Auth::user(), // Pega o usuário logado
+            'user' => Auth::user(),
         ]);
     }
 
-    /**
-     * Atualiza o perfil do usuário autenticado.
-     */
+    public function security(Request $request)
+    {
+        return view('users.security');
+    }
+
+    public function updatePassword(Request $request)
+    {
+
+        $validated = $request->validate([
+            'current_password' => ['bail', 'required', 'current_password:web'],
+
+            'password' => ['required', Password::defaults(), 'confirmed', 'different:current_password'],
+        ], [
+            'current_password.current_password' => 'A senha atual fornecida está incorreta.',
+            'password.different' => 'A nova senha deve ser diferente da senha atual.',
+        ]);
+
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('status', 'password-updated');
+    }
+
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -56,5 +75,22 @@ class ProfileController extends Controller
 
         $user->update($validatedData);
         return redirect()->route('profile.show', ['user' => $user])->with('status', 'Perfil atualizado com sucesso!');
+    }
+
+    public function destroy(Request $request)
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password:web'],
+        ], [
+            'password.current_password' => 'A senha fornecida está incorreta.',
+        ]);
+
+        $user = $request->user();
+        Auth::logout();
+        $user->delete();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return view('auth.register');
     }
 }
