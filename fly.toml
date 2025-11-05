@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for sgc-corrigido on 2025-10-22T23:09:59-03:00
+# fly.toml app configuration file generated for sgc-corrigido on 2025-11-04T19:59:03-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,10 +7,10 @@ app = 'sgc-corrigido'
 primary_region = 'gru'
 console_command = 'php /var/www/html/artisan tinker'
 
-[build.args]
-  NODE_VERSION = '18'
-  PHP_VERSION = '8.2'
-  APP_URL = "https://sgc-corrigido.fly.dev"
+[build]
+  [build.args]
+    NODE_VERSION = '18'
+    PHP_VERSION = '8.2'
 
 [env]
   APP_ENV = 'production'
@@ -23,16 +23,19 @@ console_command = 'php /var/www/html/artisan tinker'
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
+  memory = '256mb'
   cpu_kind = 'shared'
   cpus = 1
 
 [mounts]
   source="sgc_storage"
   destination="/var/www/html/storage/app"
+
+[deploy]
+  release_command = "sh -c 'php artisan migrate --force && php artisan storage:link'"

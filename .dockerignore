@@ -10,7 +10,6 @@ storage/logs/*
 .rr.yml
 rr
 frankenphp
-vendor
 
 # 2. Ignore common files/directories we don't need
 fly.toml
@@ -26,11 +25,3 @@ fly.toml
 **/.DS_Store
 **/Thumbs.db
 public/hot
-
-.git
-.github
-.dockerignore
-Dockerfile
-fly.toml
-node_modules
-public/storage
